@@ -1,4 +1,4 @@
 source "https://rubygems.org"
 
-gem "jekyll", "~> 3.9.0"
+# Ini akan menggunakan versi Jekyll yang didukung oleh GitHub Pages
 gem "github-pages", group: :jekyll_plugins
