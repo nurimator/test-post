@@ -6,7 +6,7 @@ category: "Tutorial"
 author: "Andini Putri"
 author_role: "Frontend Developer"
 author_bio: "Menulis tentang React, CSS, dan semua hal tentang desain web modern."
-author_avatar: "/assets/images/authors/andini-putri.jpg"
+author_avatar: "[/assets/images/authors/andini-putri.jpg](https://i.pravatar.cc/150?u=a042581f4e29026704d)"
 image: "https://placehold.co/1200x600/111827/60a5fa?text=Zustand%20Tutorial"
 ---
 
