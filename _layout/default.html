@@ -1,247 +1,110 @@
 ---
-# Front Matter kosong di file layout
+# Front Matter di file layout bisa dibiarkan kosong
 ---
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Judul halaman akan dinamis. Format: "Judul Halaman | Judul Situs" -->
     <title>{{ page.title | escape }} | {{ site.title | escape }}</title>
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts: Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <!-- Lucide Icons CDN -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <!-- Prism JS for Code Highlighting -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js" defer></script>
-
+    <!-- Gaya CSS yang diperbarui -->
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #111827;
-            color: #d1d5db;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            background-color: #2c3e50; /* Warna latar belakang biru tua/abu-abu */
+            color: #ecf0f1; /* Warna teks terang */
+            margin: 0;
+            padding: 1em;
         }
-        .article-content h1, .article-content h2, .article-content h3, .article-content h4 {
+        .container {
+            margin: 0 auto;
+            max-width: 800px;
+            padding: 1em 2em 2em 2em;
+            background-color: #34495e; /* Warna latar konten sedikit lebih terang */
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        header, footer {
+            text-align: center;
+            padding: 1em 0;
+            color: #bdc3c7; /* Warna abu-abu terang untuk header/footer */
+        }
+        header h1 {
             color: #ffffff;
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #374151;
+            margin: 0;
         }
-        .article-content h1 { font-size: 2.25rem; font-weight: 800; }
-        .article-content h2 { font-size: 1.875rem; font-weight: 800; }
-        .article-content h3 { font-size: 1.5rem; font-weight: 700; }
-        .article-content p { line-height: 1.75; margin-bottom: 1.5rem; }
-        .article-content a { color: #60a5fa; text-decoration: underline; text-decoration-color: #60a5fa; transition: color 0.3s; }
-        .article-content a:hover { color: #93c5fd; }
-        .article-content ul, .article-content ol { list-style-position: inside; margin-bottom: 1.5rem; line-height: 1.75; }
-        .article-content ul { list-style-type: disc; }
-        .article-content ol { list-style-type: decimal; }
-        .article-content blockquote { border-left: 4px solid #3b82f6; padding-left: 1.5rem; margin: 1.5rem 0; font-style: italic; color: #9ca3af; }
-        .article-content img { border-radius: 0.75rem; margin-top: 1.5rem; margin-bottom: 1.5rem; }
-        pre[class*="language-"] { background: #1f2937; border-radius: 0.75rem; border: 1px solid #374151; }
+        nav a {
+            color: #3498db; /* Warna biru untuk tautan navigasi */
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        h1, h2, h3 {
+            color: #ffffff;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.3em;
+        }
+        article h1 {
+            font-size: 2.5em;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 3px solid #bdc3c7;
+        }
+        pre {
+            background-color: #2c3e50; /* Latar belakang blok kode lebih gelap */
+            padding: 1em;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid #7f8c8d;
+            color: #ecf0f1;
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.1em;
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(to right, rgba(189, 195, 199, 0), rgba(189, 195, 199, 0.75), rgba(189, 195, 199, 0));
+        }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-300">
+<body>
 
-    <!-- ===== Header Section ===== -->
-    <header id="header" class="bg-gray-900/80 backdrop-blur-sm sticky top-0 left-0 right-0 z-50 border-b border-gray-700/50">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <a href="{{ "/" | relative_url }}" class="text-2xl font-bold text-white tracking-wider">Proyek<span class="text-blue-500">Kita</span></a>
-                <nav class="hidden lg:flex items-center space-x-8">
-                    <a href="{{ "/" | relative_url }}#hero" class="text-gray-300 hover:text-blue-400">Beranda</a>
-                    <a href="{{ "/" | relative_url }}#proyek" class="text-gray-300 hover:text-blue-400">Proyek</a>
-                    <a href="{{ "/" | relative_url }}#komunitas" class="text-gray-300 hover:text-blue-400">Komunitas</a>
-                </nav>
-                <div class="flex items-center space-x-4">
-                    <div class="hidden md:block relative">
-                        <input type="text" id="search-input" placeholder="Cari artikel..." class="bg-gray-800 border border-gray-700 rounded-full py-2 pl-10 pr-4 text-sm w-64 focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                        <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500"></i>
-                    </div>
-                    <div class="hidden lg:block relative" id="desktop-dropdown-container">
-                        <button id="desktop-dropdown-button" class="bg-blue-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-blue-700 flex items-center space-x-2">
-                            <span>Menu</span> <i data-lucide="chevron-down" class="w-4 h-4"></i>
-                        </button>
-                        <div id="desktop-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-gray-800 rounded-xl shadow-lg p-2 border border-gray-700">
-                           <a href="{{ "/" | relative_url }}#proyek" class="block p-3 text-sm text-white hover:bg-gray-700 rounded-lg">Proyek</a>
-                           <a href="{{ "/postingan.html" | relative_url }}" class="block p-3 text-sm text-white hover:bg-gray-700 rounded-lg">Postingan</a>
-                           <a href="{{ "/" | relative_url }}#komunitas" class="block p-3 text-sm text-white hover:bg-gray-700 rounded-lg">Donasi</a>
-                           <a href="#" class="block p-3 text-sm text-white hover:bg-gray-700 rounded-lg">FAQ</a>
-                        </div>
-                    </div>
-                    <button id="mobile-menu-button" class="lg:hidden p-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-700">
-                        <i data-lucide="menu" class="w-6 h-6"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div id="mobile-menu" class="hidden lg:hidden bg-gray-900/95 backdrop-blur-sm">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="{{ "/" | relative_url }}#hero" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Beranda</a>
-                <a href="{{ "/" | relative_url }}#proyek" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Proyek</a>
-                <a href="{{ "/" | relative_url }}#komunitas" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Komunitas</a>
-                <div class="border-t border-gray-700 pt-4 mt-4 space-y-1">
-                     <a href="{{ "/postingan.html" | relative_url }}" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-700">Postingan</a>
-                     <a href="{{ "/" | relative_url }}#komunitas" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Donasi</a>
-                     <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">FAQ</a>
-                </div>
-            </div>
-        </div>
-    </header>
+    <div class="container">
+        <header>
+            <h1>{{ site.title | default: "Judul Situs Saya" }}</h1>
+            <p>{{ site.description | default: "Deskripsi singkat tentang situs ini." }}</p>
+            <nav>
+                <a href="{{ "/" | relative_url }}">Beranda</a> | 
+                <a href="{{ "/postingan.html" | relative_url }}">Semua Postingan</a>
+            </nav>
+        </header>
 
-    <main class="bg-gray-800/50">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+        <main>
+            <!-- Konten dari halaman atau postingan Anda akan muncul di sini -->
+            <article>
+                <h1>{{ page.title }}</h1>
+                <p>Ditulis pada {{ page.date | date: "%d %B %Y" }} oleh {{ page.author }}</p>
+                <hr>
                 
-                <article class="lg:col-span-8 xl:col-span-9">
-                    <!-- Post Header -->
-                    <div class="mb-8">
-                        <p class="text-base font-semibold text-blue-400">{{ page.category | default: "ARTIKEL" }}</p>
-                        <h1 class="mt-2 text-3xl md:text-5xl font-extrabold text-white tracking-tight">{{ page.title | escape }}</h1>
-                        <div class="mt-6 flex items-center space-x-4 text-sm text-gray-400">
-                            <span>Oleh: {{ page.author | default: site.author }}</span>
-                            <span class="text-gray-600">•</span>
-                            <span>{{ page.date | date: "%d %B %Y" }}</span>
-                        </div>
-                    </div>
+                {{ content }}
 
-                    {% if page.image %}
-                    <img src="{{ page.image | relative_url }}" alt="{{ page.title | escape }}" class="w-full rounded-2xl shadow-lg mb-12 border-4 border-gray-700/50" onerror="this.onerror=null;this.src='https://placehold.co/1200x600/111827/FFFFFF?text=Image+Not+Found';">
-                    {% endif %}
+            </article>
+        </main>
 
-                    <div class="prose prose-invert max-w-none article-content">
-                        {{ content }}
-                    </div>
-                    
-                </article>
+        <footer>
+            <hr>
+            <p>&copy; {{ "now" | date: "%Y" }} {{ site.title }}. Dibuat dengan Jekyll.</p>
+        </footer>
+    </div>
 
-                <!-- Sidebar -->
-                <aside class="lg:col-span-4 xl:col-span-3">
-                    <div class="sticky top-28 space-y-8">
-                        <!-- Author Box -->
-                        <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700/80 text-center">
-                            {% if page.author_avatar %}
-                                <img src="{{ page.author_avatar | relative_url }}" alt="Foto {{ page.author }}" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-blue-500/50" onerror="this.onerror=null;this.src='https://placehold.co/150x150/1f2937/FFFFFF?text=AV';">
-                            {% else %}
-                                <img src="https://i.pravatar.cc/150?u={{ page.author | slugify }}" alt="Foto {{ page.author }}" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-blue-500/50" onerror="this.onerror=null;this.src='https://placehold.co/150x150/1f2937/FFFFFF?text=AV';">
-                            {% endif %}
-                            <h4 class="text-xl font-bold text-white">{{ page.author | default: "Penulis" }}</h4>
-                            {% if page.author_role %}
-                                <p class="text-sm text-gray-400 mt-1">{{ page.author_role }}</p>
-                            {% endif %}
-                            {% if page.author_bio %}
-                                <p class="text-xs text-gray-500 mt-4">{{ page.author_bio }}</p>
-                            {% endif %}
-                        </div>
-                        
-                        <!-- Related Posts (Logika Jekyll) -->
-                        <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700/80">
-                            <h3 class="text-lg font-bold text-white mb-4">Baca Juga</h3>
-                            <div class="space-y-4">
-                                {% for post in site.related_posts limit:2 %}
-                                    <a href="{{ post.url | relative_url }}" class="flex items-center space-x-4 group">
-                                        {% if post.image %}
-                                            <img src="{{ post.image | relative_url }}" alt="{{ post.title | escape }}" class="w-16 h-16 rounded-lg object-cover flex-shrink-0" onerror="this.onerror=null;this.src='https://placehold.co/100x100/111827/FFFFFF?text=Image';">
-                                        {% else %}
-                                            <img src="https://placehold.co/100x100/111827/FFFFFF?text={{ post.category | slice: 0 | upcase }}" alt="{{ post.title | escape }}" class="w-16 h-16 rounded-lg object-cover flex-shrink-0">
-                                        {% endif %}
-                                        <div>
-                                            <p class="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">{{ post.title | escape }}</p>
-                                        </div>
-                                    </a>
-                                {% else %}
-                                    <p class="text-sm text-gray-500">Tidak ada artikel terkait.</p>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                </aside>
-            </div>
-        </div>
-    </main>
-
-    <!-- ===== Footer Section ===== -->
-    <footer class="bg-gray-900 border-t border-gray-800">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
-                <div class="col-span-2 lg:col-span-2">
-                    <a href="{{ "/" | relative_url }}" class="text-2xl font-bold text-white tracking-wider">{{ site.title | default: "ProyekKita" }}</a>
-                    <p class="mt-4 text-gray-400 max-w-xs">{{ site.description | default: "Deskripsi situs Anda di sini." }}</p>
-                </div>
-                <div>
-                    <h4 class="font-bold text-white mb-4">Navigasi</h4>
-                    <ul class="space-y-2">
-                        <li><a href="{{ "/" | relative_url }}#proyek" class="text-gray-400 hover:text-blue-400">Portofolio</a></li>
-                        <li><a href="{{ "/" | relative_url }}#komunitas" class="text-gray-400 hover:text-blue-400">Komunitas</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-blue-400">Karir</a></li>
-                        <li><a href="{{ "/postingan.html" | relative_url }}" class="text-gray-400 hover:text-blue-400">Blog</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold text-white mb-4">Legal</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-blue-400">Kebijakan Privasi</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-blue-400">Syarat & Ketentuan</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-blue-400">Lisensi</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold text-white mb-4">Ikuti Kami</h4>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-blue-400"><i data-lucide="twitter" class="w-6 h-6"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-blue-400"><i data-lucide="github" class="w-6 h-6"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-blue-400"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-16 pt-8 border-t border-gray-800 text-center text-gray-500">
-                <p>&copy; {{ "now" | date: "%Y" }} {{ site.title | default: "ProyekKita" }}. Semua Hak Cipta Dilindungi.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            lucide.createIcons();
-            Prism.highlightAll();
-            
-            // --- Mobile Menu Toggle ---
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-
-            // --- Desktop Dropdown Toggle ---
-            const dropdownButton = document.getElementById('desktop-dropdown-button');
-            const dropdownMenu = document.getElementById('desktop-dropdown-menu');
-            const dropdownContainer = document.getElementById('desktop-dropdown-container');
-
-            if (dropdownButton) {
-                dropdownButton.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                    dropdownMenu.classList.toggle('hidden');
-                });
-            }
-
-            // Klik di luar dropdown untuk menutupnya
-            document.addEventListener('click', function(event) {
-                if (dropdownContainer && !dropdownContainer.contains(event.target) && !dropdownMenu.classList.contains('hidden')) {
-                    dropdownMenu.classList.add('hidden');
-                }
-            });
-        });
-    </script>
 </body>
 </html>
