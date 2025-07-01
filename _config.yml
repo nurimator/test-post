@@ -1,0 +1,44 @@
+# _config.yml
+
+# -- Pengaturan Situs --
+title: ProyekKita
+email: your-email@example.com
+description: >- # Deskripsi ini akan muncul di meta tag dan feed RSS
+  Membangun ekosistem digital yang kolaboratif dan inovatif 
+  untuk masa depan yang lebih baik.
+baseurl: "" # biarkan kosong jika situs Anda di username.github.io
+url: "https://username.github.io" # ganti 'username' dengan nama pengguna GitHub Anda
+author: ProyekKita Team
+twitter_username: jekyllrb
+github_username:  jekyll
+
+# -- Pengaturan Build --
+# Plugin yang digunakan oleh GitHub Pages
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# -- Front Matter Defaults --
+# Menetapkan layout default untuk semua postingan dan halaman
+defaults:
+  - scope:
+      path: "" # semua file
+      type: "posts" # hanya untuk postingan
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+
+# -- Pengecualian dari Build --
+# File/folder yang tidak akan diproses oleh Jekyll
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
