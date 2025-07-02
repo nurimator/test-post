@@ -1,0 +1,141 @@
+---
+permalink:/id/post
+lang:id
+---
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Postingan | Nurimator</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #111827; color: #d1d5db; overflow-x: hidden; }
+        .loader { border: 4px solid #374151; border-top: 4px solid #3b82f6; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-300">
+
+  <!-- Menyisipkan file header.html -->
+  {% include header.html %}
+
+    <main class="bg-gray-800/50">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 lg:pt-10 lg:pb-24">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+          
+          <!-- Post Container -->
+          <div class="lg:col-span-2 space-y-8">
+            {% assign posts = site.posts | where: "lang", page.lang %}
+            {% if posts.size > 0 %}
+              {% for post in posts %}
+                <div class="bg-gray-800 rounded-2xl overflow-hidden border border-gray-700/80 shadow-lg transition-all duration-300 hover:border-blue-500/50 flex flex-col md:flex-row">
+                  <a href="{{ post.url }}" class="block md:w-1/3 lg:w-2/5 xl:w-1/3 flex-shrink-0">
+                    <img src="{{ post.image | default: 'https://placehold.co/600x400/111827/FFFFFF?text=No+Image' }}" alt="Gambar {{ post.title }}" class="w-full h-56 md:h-full object-cover">
+                  </a>
+                  <div class="p-6 flex flex-col">
+                    {% if post.categories %}
+                      <span class="text-sm font-semibold text-blue-400">
+                        {{ post.categories[0] | upcase }}
+                      </span>
+                    {% endif %}
+                    <a href="{{ post.url }}" class="block mt-2 flex-grow">
+                      <h3 class="text-xl font-bold text-white hover:text-blue-400 transition-colors">{{ post.title }}</h3>
+                      <p class="mt-2 text-gray-400 text-sm">{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+                    </a>
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <p class="text-center text-gray-400 col-span-full">Tidak ada postingan ditemukan.</p>
+            {% endif %}
+          </div>
+    
+          <!-- Sidebar / Kategori -->
+          <aside class="lg:col-span-1 space-y-8">
+            <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700/80 sticky top-28">
+              <h3 class="text-lg font-bold text-white mb-4">Kategori</h3>
+              <ul class="space-y-3">
+                {% assign posts_lang = site.posts | where: "lang", page.lang %}
+                {% assign all_categories = "" | split: "" %}
+                {% for post in posts_lang %}
+                  {% assign all_categories = all_categories | concat: post.categories %}
+                {% endfor %}
+                {% assign unique_categories = all_categories | uniq | sort %}
+                {% for category in unique_categories %}
+                  {% assign count = 0 %}
+                  {% for post in posts_lang %}
+                    {% if post.categories contains category %}
+                      {% assign count = count | plus: 1 %}
+                    {% endif %}
+                  {% endfor %}
+                  <li>
+                    <a href="/{{ page.lang }}/postingan/kategori/{{ category | slugify }}.html" class="w-full flex justify-between items-center text-gray-300 hover:text-blue-400 transition-colors">
+                      <span>{{ category }}</span>
+                      <span class="text-xs font-semibold text-gray-500 bg-gray-700 px-2 py-0.5 rounded-full">{{ count }}</span>
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+
+  <!-- Menyisipkan file footer.html -->
+  {% include footer.html %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Menu & UI Logic ---
+            lucide.createIcons();
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            const desktopDropdownButton = document.getElementById('desktop-dropdown-button');
+            const desktopDropdownMenu = document.getElementById('desktop-dropdown-menu');
+            const desktopDropdownContainer = document.getElementById('desktop-dropdown-container');
+            if (desktopDropdownButton) {
+                desktopDropdownButton.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    desktopDropdownMenu.classList.toggle('hidden');
+                });
+                window.addEventListener('click', (event) => {
+                    if (!desktopDropdownContainer.contains(event.target)) {
+                        desktopDropdownMenu.classList.add('hidden');
+                    }
+                });
+            }
+            // --- Mobile Search Toggle Logic ---
+            const headerMainContent = document.getElementById('header-main-content');
+            const mobileSearchView = document.getElementById('mobile-search-view');
+            const mobileSearchOpenButton = document.getElementById('mobile-search-open-button');
+            const mobileSearchCloseButton = document.getElementById('mobile-search-close-button');
+            
+            if (mobileSearchOpenButton) {
+                mobileSearchOpenButton.addEventListener('click', () => {
+                    headerMainContent.classList.add('hidden');
+                    mobileSearchView.classList.remove('hidden');
+                    mobileSearchView.classList.add('flex');
+                    document.getElementById('mobile-search-input').focus();
+                });
+            }
+
+            if (mobileSearchCloseButton) {
+                mobileSearchCloseButton.addEventListener('click', () => {
+                    headerMainContent.classList.remove('hidden');
+                    mobileSearchView.classList.add('hidden');
+                    mobileSearchView.classList.remove('flex');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
