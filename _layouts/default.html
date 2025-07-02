@@ -1,96 +1,155 @@
 <!DOCTYPE html>
-<html lang="id" class="dark">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page.title }} | Blog Saya</title>
+    <!-- Judul halaman dinamis dari front matter -->
+    <title>{{ page.title }} | {{ site.title | default: "ProyekKita" }}</title>
     
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Prism JS for Code Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            background-color: #111827; /* bg-gray-900 */
+            color: #d1d5db; /* text-gray-300 */
         }
-        .prose pre {
-            background-color: #1f2937;
-            color: #d1d5db;
-            border-radius: 0.5rem;
-            padding: 1rem;
+        /* Styling untuk konten yang dibuat dari Markdown */
+        .article-content h2 {
+            font-size: 1.875rem; font-weight: 800; color: #ffffff;
+            margin-top: 2.5rem; margin-bottom: 1rem;
+            border-bottom: 1px solid #374151; padding-bottom: 0.5rem;
         }
-        .prose code {
-            font-family: 'Courier New', Courier, monospace;
-        }
-        .dark .prose-invert blockquote {
-            border-left-color: #60a5fa;
-            color: #9ca3af;
-        }
+        .article-content p { line-height: 1.75; margin-bottom: 1.5rem; }
+        .article-content a { color: #60a5fa; text-decoration: underline; text-decoration-color: #60a5fa; transition: color 0.3s; }
+        .article-content a:hover { color: #93c5fd; }
+        .article-content ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1.5rem; line-height: 1.75; }
+        .article-content blockquote { border-left: 4px solid #3b82f6; padding-left: 1.5rem; margin: 1.5rem 0; font-style: italic; color: #9ca3af; }
+        pre[class*="language-"] { background: #1f2937 !important; border-radius: 0.75rem; border: 1px solid #374151; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200 transition-colors duration-300">
+<body class="bg-gray-900 text-gray-300">
 
-    <!-- Navigasi Header -->
-    <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10">
-        <nav class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <a href="/" class="text-2xl font-bold text-gray-900 dark:text-white">Blog Saya</a>
-                <div>
-                    <a href="/arsip" class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md">Arsip</a>
-                    <a href="/tentang" class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md">Tentang</a>
+    <!-- ===== Header Section ===== -->
+    <header id="header" class="bg-gray-900/80 backdrop-blur-sm sticky top-0 left-0 right-0 z-50 border-b border-gray-700/50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="{{ "/" | relative_url }}" class="text-2xl font-bold text-white tracking-wider">{{ site.title | default: "ProyekKita" | split: " " | first }}<span class="text-blue-500">{{ site.title | default: "ProyekKita" | split: " " | last }}</span></a>
+                <nav class="hidden lg:flex items-center space-x-8">
+                    <a href="{{ "/" | relative_url }}#hero" class="text-gray-300 hover:text-blue-400">Beranda</a>
+                    <a href="{{ "/" | relative_url }}#proyek" class="text-gray-300 hover:text-blue-400">Proyek</a>
+                    <a href="{{ "/" | relative_url }}#komunitas" class="text-gray-300 hover:text-blue-400">Komunitas</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <button id="mobile-menu-button" class="lg:hidden p-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-700">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
                 </div>
             </div>
-        </nav>
+        </div>
+        <div id="mobile-menu" class="hidden lg:hidden bg-gray-900/95 backdrop-blur-sm">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="{{ "/" | relative_url }}#hero" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Beranda</a>
+                <a href="{{ "/" | relative_url }}#proyek" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Proyek</a>
+                <a href="{{ "/" | relative_url }}#komunitas" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Komunitas</a>
+            </div>
+        </div>
     </header>
 
-    <!-- Konten Utama -->
-    <main class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <article class="prose lg:prose-xl max-w-none dark:prose-invert">
-            
-            <!-- Header Postingan -->
-            <header class="mb-8">
-                <p class="text-base font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wide">{{ page.category }}</p>
-                <h1 class="mt-2 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 sm:text-5xl">
-                    {{ page.title }}
-                </h1>
+    <main class="bg-gray-800/50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
                 
-                <!-- Meta Penulis -->
-                <div class="mt-6 flex items-center">
-                    <div class="flex-shrink-0">
-                        <img class="h-12 w-12 rounded-full object-cover" src="{{ page.author_avatar | relative_url }}" alt="Foto profil {{ page.author }}">
+                <article class="lg:col-span-8 xl:col-span-9">
+                    <!-- Post Header -->
+                    <div class="mb-8">
+                        <p class="text-base font-semibold text-blue-400">{{ page.category }}</p>
+                        <h1 class="mt-2 text-3xl md:text-5xl font-extrabold text-white tracking-tight">{{ page.title }}</h1>
+                        <div class="mt-6 flex items-center space-x-4 text-sm text-gray-400">
+                            <span>Oleh: {{ page.author }}</span>
+                            <span class="text-gray-600">•</span>
+                            <span>{{ page.date | date: "%d %B %Y" }}</span>
+                        </div>
                     </div>
-                    <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-900 dark:text-gray-200">{{ page.author }}</p>
-                        <!-- BAGIAN WAKTU POSTINGAN TELAH DIHAPUS DARI SINI -->
+
+                    {% if page.image %}
+                    <img src="{{ page.image | relative_url }}" alt="Gambar utama untuk {{ page.title }}" class="w-full rounded-2xl shadow-lg mb-12 border-4 border-gray-700/50" onerror="this.onerror=null;this.src='https://placehold.co/1200x600/111827/FFFFFF?text=Image+Not+Found';">
+                    {% endif %}
+
+                    <!-- Konten dari Markdown -->
+                    <div class="prose prose-invert max-w-none article-content">
+                        {{ content }}
                     </div>
-                </div>
-            </header>
+                </article>
 
-            <!-- Gambar Utama Postingan -->
-            {% if page.image %}
-            <figure class="my-8">
-                <img class="w-full rounded-lg shadow-md object-cover" src="{{ page.image }}" alt="Gambar utama untuk postingan {{ page.title }}">
-            </figure>
-            {% endif %}
-
-            <!-- Konten Postingan -->
-            <div class="mt-8">
-                {{ content }}
+                <!-- Sidebar -->
+                <aside class="lg:col-span-4 xl:col-span-3">
+                    <div class="sticky top-28 space-y-8">
+                        <!-- Author Box -->
+                        <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700/80 text-center">
+                            <img src="{{ page.author_avatar | relative_url }}" alt="Foto profil {{ page.author }}" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-blue-500/50" onerror="this.onerror=null;this.src='https://placehold.co/150x150/1f2937/FFFFFF?text=AP';">
+                            <h4 class="text-xl font-bold text-white">{{ page.author }}</h4>
+                            <p class="text-sm text-gray-400 mt-1">{{ page.author_role }}</p>
+                            <p class="text-xs text-gray-500 mt-4">{{ page.author_bio }}</p>
+                        </div>
+                        <!-- Related Posts -->
+                        {% if site.related_posts.size > 0 %}
+                        <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700/80">
+                            <h3 class="text-lg font-bold text-white mb-4">Baca Juga</h3>
+                            <div class="space-y-4">
+                                {% for post in site.related_posts limit:2 %}
+                                <a href="{{ post.url | relative_url }}" class="flex items-center space-x-4 group">
+                                    <img src="{{ post.image | relative_url }}" alt="Gambar untuk {{ post.title }}" class="w-16 h-16 rounded-lg object-cover flex-shrink-0" onerror="this.onerror=null;this.src='https://placehold.co/100x100/111827/FFFFFF?text=Image';">
+                                    <div>
+                                        <p class="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">{{ post.title }}</p>
+                                    </div>
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </aside>
             </div>
-
-        </article>
+        </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-white dark:bg-gray-800 mt-12 border-t border-gray-200 dark:border-gray-700">
-        <div class="max-w-5xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-gray-500 dark:text-gray-400">
-            <p>&copy; {{ site.time | date: '%Y' }} Blog Saya. Dibuat dengan Jekyll & ❤️.</p>
+    <!-- ===== Footer Section ===== -->
+    <footer class="bg-gray-900 border-t border-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="mt-16 pt-8 border-t border-gray-800 text-center text-gray-500">
+                <p>&copy; {{ site.time | date: '%Y' }} {{ site.title | default: "ProyekKita" }}. Semua Hak Cipta Dilindungi.</p>
+            </div>
         </div>
     </footer>
+    
+    <!-- Prism JS and Lucide Icons Initializer -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            lucide.createIcons();
+            
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+    </script>
 </body>
 </html>
