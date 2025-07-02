@@ -17,6 +17,7 @@ github_username:  nurimator
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-paginate
 
 # -- Front Matter Defaults --
 # Menetapkan layout default untuk semua postingan dan halaman
