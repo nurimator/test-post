@@ -11,6 +11,8 @@ url: "https://nurimator.github.io" # ganti 'username' dengan nama pengguna GitHu
 author: nurimator
 twitter_username: nurimator
 github_username:  nurimator
+paginate: 5
+paginate_path: "/id/post/page:num/"
 
 # -- Pengaturan Build --
 # Plugin yang digunakan oleh GitHub Pages
