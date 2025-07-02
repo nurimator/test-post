@@ -42,31 +42,9 @@
 </head>
 <body class="bg-gray-900 text-gray-300">
 
-    <!-- ===== Header Section ===== -->
-    <header id="header" class="bg-gray-900/80 backdrop-blur-sm sticky top-0 left-0 right-0 z-50 border-b border-gray-700/50">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <a href="{{ "/" | relative_url }}" class="text-2xl font-bold text-white tracking-wider">{{ site.title | default: "ProyekKita" | split: " " | first }}<span class="text-blue-500">{{ site.title | default: "ProyekKita" | split: " " | last }}</span></a>
-                <nav class="hidden lg:flex items-center space-x-8">
-                    <a href="{{ "/" | relative_url }}#hero" class="text-gray-300 hover:text-blue-400">Beranda</a>
-                    <a href="{{ "/" | relative_url }}#proyek" class="text-gray-300 hover:text-blue-400">Proyek</a>
-                    <a href="{{ "/" | relative_url }}#komunitas" class="text-gray-300 hover:text-blue-400">Komunitas</a>
-                </nav>
-                <div class="flex items-center space-x-4">
-                    <button id="mobile-menu-button" class="lg:hidden p-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-700">
-                        <i data-lucide="menu" class="w-6 h-6"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div id="mobile-menu" class="hidden lg:hidden bg-gray-900/95 backdrop-blur-sm">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="{{ "/" | relative_url }}#hero" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Beranda</a>
-                <a href="{{ "/" | relative_url }}#proyek" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Proyek</a>
-                <a href="{{ "/" | relative_url }}#komunitas" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Komunitas</a>
-            </div>
-        </div>
-    </header>
+    
+  <!-- Menyisipkan file header.html -->
+  {% include header.html %}
 
     <main class="bg-gray-800/50">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
@@ -126,14 +104,8 @@
         </div>
     </main>
 
-    <!-- ===== Footer Section ===== -->
-    <footer class="bg-gray-900 border-t border-gray-800">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div class="mt-16 pt-8 border-t border-gray-800 text-center text-gray-500">
-                <p>&copy; {{ site.time | date: '%Y' }} {{ site.title | default: "ProyekKita" }}. Semua Hak Cipta Dilindungi.</p>
-            </div>
-        </div>
-    </footer>
+    <!-- Menyisipkan file footer.html -->
+  {% include footer.html %}
     
     <!-- Prism JS and Lucide Icons Initializer -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
